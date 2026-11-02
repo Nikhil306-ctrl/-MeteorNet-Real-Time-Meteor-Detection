@@ -257,4 +257,8 @@ Open a Pull Request on GitHub for review.
 
 *Building a smarter approach to automated sky-image analysis.*
 
+## 🎨 Project Preview
+
+![MeteorNet Project Preview](assets/readme_mockup_reference.png)
+
 </div>
