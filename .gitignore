@@ -1,0 +1,21 @@
+
+# Python virtual environment
+.venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Dataset files
+D_2 DATASET (METEORS)/
+D_2 DATASET (METEORS).zip
+
+# Model checkpoints
+models/*.pth
+models/*.pt
+
+# Generated training results
+results/
+
+# VS Code local settings
+.vscode/
