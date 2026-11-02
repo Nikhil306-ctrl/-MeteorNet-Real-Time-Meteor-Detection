@@ -1,179 +1,260 @@
-# MeteorNet -- Real-Time Meteor Detection
+# ☄️ MeteorNet — Real-Time Meteor Detection
 
-A deep-learning project for classifying sky images into two categories:
+<div align="center">
 
--   `meteor` --- class label `0`
--   `non_meteor` --- class label `1`
+<img src="assets/banner.png" width="100%" alt="MeteorNet Banner">
 
-The dataset contains 20,000 images: 10,000 per class. The current
-codebase includes a custom CNN (MeteorNet) and ResNet18.
+### Real-Time Meteor Detection Using Deep Learning
 
-> **Project status:** Dataset inspection and code preparation are
-> complete. Full GPU training, a leakage-resistant train/validation/test
-> split, final evaluation, and final reported results are still pending.
-> CPU smoke tests are pipeline checks, not final results.
+**Detect. Predict. Stay Ahead.**
 
-## 1. Repository
+</div>
 
-GitHub:
-https://github.com/Nikhil306-ctrl/-MeteorNet-Real-Time-Meteor-Detection
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.11-blue?logo=python" alt="Python">
+  <img src="https://img.shields.io/badge/PyTorch-Deep%20Learning-ee4c2c?logo=pytorch" alt="PyTorch">
+  <img src="https://img.shields.io/badge/Architecture-CNN-purple" alt="CNN">
+  <img src="https://img.shields.io/badge/Model-ResNet18-blue" alt="ResNet18">
+  <img src="https://img.shields.io/badge/Training-NVIDIA%20GPU-green?logo=nvidia" alt="NVIDIA GPU">
+</p>
 
-``` powershell
-git clone https://github.com/Nikhil306-ctrl/-MeteorNet-Real-Time-Meteor-Detection.git
-cd -MeteorNet-Real-Time-Meteor-Detection
+---
+
+## 🔭 Project Overview
+
+MeteorNet is a deep-learning project designed to classify sky images into two categories:
+
+- **Meteor (0):** Images containing meteor-like streaks.
+- **Non-Meteor (1):** Images without meteor-like streaks.
+
+The dataset contains **20,000 images**, with 10,000 images per class.
+
+The project currently implements a custom Convolutional Neural Network (MeteorNet) and ResNet18 for image classification.
+
+> **Current status:** Dataset inspection, initial model implementation and code preparation are complete. Full GPU training, leakage-resistant data splitting and final evaluation are pending. CPU smoke tests are pipeline checks, not final model results.
+
+## ⚡ Key Features
+
+- Custom MeteorNet CNN architecture.
+- ResNet18 integration.
+- Dataset inspection and bias analysis.
+- Image preprocessing and augmentation.
+- Training, evaluation and prediction scripts.
+- Performance evaluation using classification metrics.
+
+## 🏗️ System Architecture
+
+```mermaid
+flowchart TD
+    A["Sky Image Dataset<br/>20,000 Images"] --> B["Preprocessing<br/>Resize, Normalize, Augment"]
+    B --> C["Model Training"]
+    C --> D["MeteorNet CNN"]
+    C --> E["ResNet18"]
+    D --> F["Model Evaluation"]
+    E --> F
+    F --> G["Accuracy, Precision, Recall, F1"]
+    G --> H["Meteor / Non-Meteor Prediction"]
 ```
 
-## 2. Project structure
+## 📊 Results
 
-``` text
-DL PROJECT/
+*Final results will be added after full training and independent test evaluation on the college NVIDIA GPU.*
+
+| Metric | Result |
+|---|---|
+| Accuracy | Pending |
+| Precision | Pending |
+| Recall | Pending |
+| F1 Score | Pending |
+| ROC-AUC | Pending |
+
+Training graphs and confusion matrices will be added after evaluation.
+
+## 🖼️ Dataset Samples
+
+The dataset is organized into two classes:
+
+| Meteor | Non-Meteor |
+|---|---|
+| Images from `meteor/` | Images from `non_meteor/` |
+
+## 🛠️ Technology Stack
+
+- Python
+- PyTorch
+- Torchvision
+- NumPy
+- Matplotlib
+- Scikit-learn
+- Pillow
+- NVIDIA CUDA
+
+## 📁 Project Structure
+
+```text
+MeteorNet/
+│
+├── assets/
+│   ├── banner.png
+│   └── readme_mockup_reference.png
+│
 ├── src/
 │   ├── dataset.py
 │   ├── models.py
 │   └── utils.py
+│
+├── models/                 # Model checkpoints (not tracked)
+├── results/                # Generated results (not tracked)
+│   ├── graphs/
+│   └── metrics/
+│
 ├── train.py
 ├── evaluate.py
 ├── predict.py
 ├── inspect_dataset.py
 ├── inspect_sources.py
+│
 ├── DATASET_AUDIT.md
 ├── requirements.txt
-├── models/       # checkpoints; not tracked by Git
-└── results/      # generated outputs; not tracked by Git
+├── README.md
+└── .gitignore
 ```
 
-The dataset, model checkpoints, and generated results are intentionally
-excluded from Git.
+## 🚀 Getting Started
 
-## 3. Dataset setup
+### 1. Clone the Repository
 
-Get the dataset ZIP separately from the project owner and extract it
-into the project root. The expected structure is:
-
-``` text
-DL PROJECT/
-└── D_2 DATASET (METEORS)/
-    └── sum_images/
-        ├── meteor/
-        └── non_meteor/
+```bash
+git clone https://github.com/Nikhil306-ctrl/-MeteorNet-Real-Time-Meteor-Detection.git
+cd -MeteorNet-Real-Time-Meteor-Detection
 ```
 
-There are 10,000 images per class. Keep the folder names unchanged
-unless you also update the dataset loader.
+### 2. Create a Virtual Environment
 
-**Read `DATASET_AUDIT.md` before creating the final data split.** The
-audit found different filename-year distributions and repeated filename
-groups. A random image-level split may allow related images into
-multiple splits. The meaning of filename IDs has not been verified;
-investigate the dataset provenance before using IDs as groups.
+**Windows PowerShell:**
 
-## 4. Local setup (Windows PowerShell)
-
-``` powershell
+```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
+```
+
+**Linux:**
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+### 3. Install Dependencies
+
+```bash
 python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-### Install PyTorch and Torchvision separately
+### 4. Install PyTorch and Torchvision
 
-They are intentionally not pinned in `requirements.txt`. Install a
-compatible pair using the official selector:
+PyTorch and Torchvision are intentionally installed separately from `requirements.txt`.
+
+Use the official installation selector:
 
 https://pytorch.org/get-started/locally/
 
-On the college NVIDIA GPU machine, select Windows, Pip, Python, and a
-CUDA option supported by that machine's NVIDIA driver. Do not assume a
-CPU-only laptop installation is suitable for GPU training.
+For college NVIDIA GPU training, select a compatible CUDA installation based on the GPU and driver available on the machine.
 
-Verify:
+Check GPU availability:
 
-``` powershell
-python -c "import torch, torchvision; print('PyTorch:', torch.__version__); print('Torchvision:', torchvision.__version__); print('CUDA available:', torch.cuda.is_available()); print('GPU:', torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'Not detected')"
+```bash
+nvidia-smi
 ```
 
-## 5. Check script options
+Verify PyTorch:
 
-Before running the scripts, inspect their actual command-line options:
+```bash
+python -c "import torch; print(torch.__version__); print('CUDA:', torch.cuda.is_available())"
+```
 
-``` powershell
+### 5. Prepare the Dataset
+
+Obtain the dataset ZIP separately and extract it into the project root.
+
+Expected structure:
+
+```text
+D_2 DATASET (METEORS)/
+└── sum_images/
+    ├── meteor/
+    └── non_meteor/
+```
+
+Read `DATASET_AUDIT.md` before deciding the final train/validation/test split.
+
+### 6. Run the Project
+
+Check the available script options:
+
+```bash
 python train.py --help
 python evaluate.py --help
 python predict.py --help
 ```
 
-Use the dataset path and options shown by the scripts. Expected dataset
-root:
+Use the arguments shown by each script when running training, evaluation and prediction.
 
-``` text
-D_2 DATASET (METEORS)/sum_images
-```
+## 🔬 Training and Evaluation Workflow
 
-## 6. Training and evaluation workflow
+1. Inspect and prepare the dataset.
+2. Investigate possible data leakage and source bias.
+3. Create a leakage-resistant train/validation/test split.
+4. Train MeteorNet and ResNet18.
+5. Perform full training using the college NVIDIA GPU.
+6. Evaluate on an independent test set.
+7. Generate performance graphs and evaluation metrics.
+8. Compare model performance.
 
-1.  Read `DATASET_AUDIT.md` and inspect the dataset.
-2.  Finalize a leakage-resistant train/validation/test split. Keep the
-    test set untouched until model selection is complete.
-3.  Check preprocessing and normalization for each model. Pretrained
-    ResNet18 should use preprocessing compatible with its pretrained
-    weights; keep training and inference transforms consistent.
-4.  Run a small smoke test.
-5.  Run full training on the college NVIDIA GPU.
-6.  Evaluate the selected model on an independent test set.
-7.  Save metrics, confusion matrix, ROC curve/AUC, and training graphs.
-8.  Record model settings, split method, random seed, and software/GPU
-    details.
+## ⚠️ Dataset and Evaluation Notes
 
-Current models: - `MeteorNet`: custom convolutional neural network. -
-`ResNet18`: torchvision ResNet18 adapted for two classes.
+- The dataset contains 10,000 images per class.
+- Filename-year distributions differ between classes.
+- Repeated filename groups were identified, especially in the non-meteor class.
+- Exact duplicate scanning found no identical images; near-duplicates have not been ruled out.
+- Filename IDs have not yet been verified as recording or camera identifiers.
+- Random image-level splitting may cause related images to appear across different splits.
 
-MobileNetV2 is not currently implemented. Add it only if it is required
-for the final comparison.
+Refer to `DATASET_AUDIT.md` for the detailed findings.
 
-## 7. Output folders
+## 🤝 Collaboration
 
--   `models/` --- saved checkpoints.
--   `results/graphs/` --- training plots.
--   `results/metrics/` --- evaluation metrics.
+Contributions should be made through separate Git branches rather than directly to `main`.
 
-These outputs are excluded from Git. Share final checkpoints and results
-separately when needed.
+Create a branch:
 
-## 8. Evaluation cautions
-
--   A balanced image count does not guarantee an unbiased evaluation.
--   Meteor and non-meteor images have different filename-year
-    distributions. This may indicate source or collection bias and needs
-    investigation.
--   Repeated filename groups were found, especially in the non-meteor
-    class. Check whether related frames could cross split boundaries.
--   No exact duplicate files were found, but near-duplicates have not
-    been ruled out.
--   Report per-class precision, recall, and F1, along with macro
-    averages. Include a confusion matrix and ROC-AUC where appropriate.
--   Do not present CPU smoke-test accuracy as final project accuracy.
-
-## 9. Git collaboration
-
-Create a branch for your work:
-
-``` powershell
+```bash
 git checkout -b feature/your-task
 ```
 
-After making changes:
+Commit and push changes:
 
-``` powershell
-git status
+```bash
 git add .
 git commit -m "Describe your changes"
 git push -u origin feature/your-task
 ```
 
-Open a Pull Request on GitHub for review. Do not commit the dataset,
-`.venv`, large checkpoints, or generated results.
+Open a Pull Request on GitHub for review.
 
-## 10. Project team
+## 📌 Repository
 
-Prepared by Nikhil and the MeteorNet project team.
+**GitHub:** [MeteorNet — Real-Time Meteor Detection](https://github.com/Nikhil306-ctrl/-MeteorNet-Real-Time-Meteor-Detection)
+
+---
+
+<div align="center">
+
+### ☄️ MeteorNet
+
+**Detect. Predict. Stay Ahead.**
+
+*Building a smarter approach to automated sky-image analysis.*
+
+</div>
