@@ -1,0 +1,19 @@
+# Core non-PyTorch dependencies
+numpy
+matplotlib
+scikit-learn
+Pillow
+tqdm
+opencv-python-headless
+
+# PyTorch and Torchvision:
+# On an NVIDIA GPU system (e.g., college GPU computer), do NOT install default PyPI wheels.
+# Check your NVIDIA driver CUDA version first (run `nvidia-smi`), then install the
+# matching CUDA-enabled torch and torchvision wheels from https://pytorch.org/get-started/locally/
+# Example command (adjust cu118 / cu121 / cu124 to match the machine's CUDA driver):
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
+#
+# On CPU-only environments (or if pip already has access to wheels):
+#   pip install torch torchvision
+torch
+torchvision
