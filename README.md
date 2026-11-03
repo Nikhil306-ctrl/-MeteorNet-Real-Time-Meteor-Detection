@@ -122,6 +122,25 @@ MeteorNet/
 
 ## 🚀 Getting Started
 
+### Google Colab (Recommended for quick GPU runs)
+
+1. Open [MeteorNet_Colab.ipynb](MeteorNet_Colab.ipynb) in Google Colab.
+2. Run the notebook cells in order:
+   - Clone/sync the repository in Colab.
+   - Install dependencies from `requirements.txt`.
+   - Mount Google Drive.
+   - Set `DATA_DIR` and training parameters.
+   - Run training, evaluation and prediction.
+3. Keep your dataset in Drive with this structure:
+
+```text
+/content/drive/MyDrive/D_2 DATASET (METEORS)/sum_images/
+├── meteor/
+└── non_meteor/
+```
+
+The notebook uses your existing scripts (`train.py`, `evaluate.py`, `predict.py`) so functionality remains the same.
+
 ### 1. Clone the Repository
 
 ```bash

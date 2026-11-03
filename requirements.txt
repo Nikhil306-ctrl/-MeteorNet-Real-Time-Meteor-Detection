@@ -4,3 +4,5 @@ scikit-learn
 Pillow
 tqdm
 opencv-python
+torch
+torchvision
