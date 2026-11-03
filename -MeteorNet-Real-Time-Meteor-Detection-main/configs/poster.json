@@ -1,0 +1,65 @@
+{
+    "experiment_name": "meteornet_poster",
+    "data": {
+        "root": "../D_2 DATASET (METEORS)/sum_images",
+        "image_size": 128,
+        "normalize": true,
+        "mean": [
+            0.485,
+            0.456,
+            0.406
+        ],
+        "std": [
+            0.229,
+            0.224,
+            0.225
+        ],
+        "rotation_min": 0.0,
+        "rotation_degrees": 0.0,
+        "horizontal_flip": 0.5,
+        "vertical_flip": 0.0,
+        "color_jitter": 0.0,
+        "random_resized_crop": false,
+        "max_per_class": null,
+        "include_checkpoints": false,
+        "split_unit": "prefix",
+        "group_key": "prefix",
+        "split_ratios": [
+            0.7,
+            0.15,
+            0.15
+        ],
+        "seed": 42,
+        "num_workers": 0,
+        "pin_memory": true
+    },
+    "model": {
+        "name": "mobilenet_v2",
+        "pretrained": false,
+        "output_mode": "ce",
+        "num_classes": 2,
+        "dropout": 0.4,
+        "in_channels": 3
+    },
+    "train": {
+        "epochs": 30,
+        "batch_size": 32,
+        "learning_rate": 0.001,
+        "weight_decay": 0.0001,
+        "optimizer": "adam",
+        "momentum": 0.9,
+        "scheduler": "none",
+        "scheduler_step_size": 10,
+        "scheduler_gamma": 0.1,
+        "scheduler_eta_min": 0.0,
+        "label_smoothing": 0.0,
+        "amp": true,
+        "grad_clip": 0.0,
+        "monitor": "val_accuracy",
+        "early_stopping_patience": 7,
+        "evaluate_test": false,
+        "deterministic": false,
+        "seed": 42
+    },
+    "notes": "Poster profile: 20,000 images, 70/15/15 train/val/test split, 128x128, random horizontal flip, two-logit cross-entropy. Uses a group-aware split by filename prefix (provisional; prefix-to-session mapping unverified). Available models: resnet18, mobilenet_v2, meteor."
+}
