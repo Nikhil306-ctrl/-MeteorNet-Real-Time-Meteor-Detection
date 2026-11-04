@@ -40,6 +40,8 @@ Three models were trained and evaluated:
 
 ## Test-set results
 
+Detailed per-model metrics, confusion matrices, experiment limitations and literature survey notes are available in [RESULTS_AND_LITERATURE.md](RESULTS_AND_LITERATURE.md).
+
 All three models were evaluated on the same held-out test set of **3,000 images**, containing 1,500 images per class.
 
 | Model | Test accuracy | Test ROC-AUC | Correct predictions |
@@ -201,10 +203,10 @@ Use the options exposed by the scripts and the configuration files in this repos
 **Project guide:** Dr. Salma Shahapur
 
 **Team members**
-- Nikhil Vijapur
-- Ritvik Shinde
-- Vidya Hugar
-- Ritika Navalyal
+- Nikhil Vijapur — 02FE24BCS043
+- Ritvik Shinde — 02FE24BCS083
+- Vidya Hugar — 02FE24BCS153
+- Ritika Navalyal — 02FE24BCS151
 
 ## Repository
 
