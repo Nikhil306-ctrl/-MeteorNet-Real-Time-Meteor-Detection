@@ -197,7 +197,7 @@ Use the options exposed by the scripts and the configuration files in this repos
 
 ## Project team
 
-**Institution:** KLE Technological University, Hubballi / Belagavi campus project context  
+**Institution:** KLE Technological University, Belagavi  
 **Project guide:** Dr. Salma Shahapur
 
 **Team members**
