@@ -73,6 +73,40 @@ ResNet18 achieved the highest test accuracy in this experiment. ROC-AUC measures
 
 These results describe performance on the supplied dataset and its held-out split. They are not a guarantee of performance on independently collected sky imagery.
 
+## System architecture
+
+The diagram below shows the end-to-end workflow used in MeteorNet, from the supplied image dataset through model training, held-out evaluation and image-level prediction.
+
+```mermaid
+flowchart TD
+    A["Supplied image dataset<br/>20,000 JPG images"] --> B["Class folders<br/>Meteor (0) / Non-Meteor (1)"]
+    B --> C["Dataset inspection and audit"]
+    C --> D["Preprocessing<br/>Resize to 224 × 224<br/>ImageNet normalization"]
+    D --> E["Group-aware split<br/>70% train / 15% validation / 15% test"]
+    E --> F["Training data<br/>Training-only augmentation<br/>Rotation ≤ 15°; horizontal flip p = 0.5"]
+    F --> G1["Custom CNN<br/>(GroupNorm)"]
+    F --> G2["ResNet18<br/>(ImageNet pretrained)"]
+    F --> G3["MobileNetV2<br/>(ImageNet pretrained)"]
+    E --> H["Held-out test set<br/>3,000 images"]
+    G1 --> I["Validation-based model selection"]
+    G2 --> I
+    G3 --> I
+    I --> J["Evaluate each model<br/>on the same test set"]
+    H --> J
+    J --> K["Compare accuracy, precision,<br/>recall, F1-score and ROC-AUC"]
+    K --> L["Best test accuracy in this experiment:<br/>ResNet18 — 99.00%"]
+    M["New input image"] --> N["Apply inference preprocessing"]
+    N --> O["Load configured trained checkpoint"]
+    O --> P["Image-level prediction"]
+    P --> Q["Meteor or Non-Meteor"]
+```
+
+**Architecture notes**
+- The three model branches are trained as separate experiments and compared using the same held-out test set.
+- Augmentation is applied to training data only; validation and test images are not randomly augmented.
+- The prediction path represents single-image classification. It does not draw bounding boxes or establish continuous live-video detection.
+- ResNet18 achieved the highest test accuracy among the three evaluated models; the prediction script uses whichever model/checkpoint is configured for that run.
+
 ## Methodology
 
 1. Inspect and audit the supplied image dataset.
