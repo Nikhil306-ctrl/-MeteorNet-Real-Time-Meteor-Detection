@@ -47,7 +47,7 @@ The dataset used for the experiments contains **20,000 JPG images**: 10,000 mete
 
 Meteor is the positive class. All results are from the project's recorded experiments on the balanced 3,000-image test split. ResNet34 has the highest accuracy (99.30%); DenseNet121 has the highest ROC-AUC (0.999640); ResNet18 has the fewest false positives (8). Real-time latency and independent-source generalization are not established.
 
-**Artifact status:** The repository's existing training code, poster, report and original graphs are legacy three-model artifacts, not the complete historical ten-model training implementation. Original additional experiment artifacts are retained in the [team Drive backup](https://drive.google.com/drive/folders/1rWP1N80QkSxXAnLvTKqBgLkWr_aENLkW). Access permissions may be required. No checkpoints were added or training rerun in this documentation update.
+**Artifact status:** The repository's existing training code, poster, report and original graphs are legacy three-model artifacts, not the complete historical ten-model training implementation. Original additional experiment artifacts are retained in the [experiment Drive backup](https://drive.google.com/drive/folders/1rWP1N80QkSxXAnLvTKqBgLkWr_aENLkW). Access permissions may be required. No checkpoints were added or training rerun in this documentation update.
 
 ## System architecture
 
@@ -79,7 +79,7 @@ The split groups images by filename prefix rather than assigning every image ind
 
 ## Dataset source and attribution
 
-The original archive, **`D_2 DATASET (METEORS).zip`**, was provided to the project team by the faculty guide through senior students for academic project use. The original upstream/public source and redistribution licence have not been independently verified.
+The original archive, **`D_2 DATASET (METEORS).zip`**, was provided for the project by the faculty guide through senior students for academic project use. The original upstream/public source and redistribution licence have not been independently verified.
 
 The dataset archive is therefore **not included in this repository**. Obtain it through the authorized academic source and place the extracted images in the expected directory structure:
 
