@@ -358,6 +358,3 @@ git push -u origin feature/your-task
 Open a Pull Request on GitHub for review. Do not commit the dataset,
 `.venv`, large checkpoints, or generated results.
 
-## 12. Project team
-
-Prepared by Nikhil and the MeteorNet project team.
