@@ -13,7 +13,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.11-blue?logo=python" alt="Python">
   <img src="https://img.shields.io/badge/PyTorch-Deep%20Learning-ee4c2c?logo=pytorch" alt="PyTorch">
-  <img src="https://img.shields.io/badge/Models-CNN%20%7C%20ResNet18%20%7C%20MobileNetV2-purple" alt="Models">
+  <img src="https://img.shields.io/badge/Models-10%20architectures-purple" alt="Models">
   <img src="https://img.shields.io/badge/Evaluation-Held--out%20Test%20Set-green" alt="Evaluation">
 </p>
 
@@ -30,82 +30,30 @@ This implementation performs **image-level binary classification**. It does not 
 
 The dataset used for the experiments contains **20,000 JPG images**: 10,000 meteor and 10,000 non-meteor images.
 
-## Models evaluated
+## Final ten-model evaluation
 
-Three models were trained and evaluated:
+| Model | Accuracy | ROC-AUC | Correct | TP | FN | FP | TN |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| ResNet34 | 99.3000% | 0.999384 | 2979/3000 | 1495 | 5 | 16 | 1484 |
+| DenseNet121 | 99.1333% | 0.999640 | 2974/3000 | 1491 | 9 | 17 | 1483 |
+| VGG16 | 99.0333% | 0.999323 | 2971/3000 | 1485 | 15 | 14 | 1486 |
+| ResNet18 | 99.0000% | 0.999261 | 2970/3000 | 1478 | 22 | 8 | 1492 |
+| InceptionV3 | 98.7000% | 0.999426 | 2961/3000 | 1479 | 21 | 18 | 1482 |
+| AlexNet | 98.6333% | 0.998572 | 2959/3000 | 1473 | 27 | 14 | 1486 |
+| EfficientNet-B0 | 98.6000% | 0.998811 | 2958/3000 | 1483 | 17 | 25 | 1475 |
+| MobileNetV2 | 98.5667% | 0.998946 | 2957/3000 | 1480 | 20 | 23 | 1477 |
+| ShuffleNetV2 x1.0 | 98.5667% | 0.999351 | 2957/3000 | 1488 | 12 | 31 | 1469 |
+| Custom CNN (GroupNorm) | 97.8000% | 0.997540 | 2934/3000 | 1471 | 29 | 37 | 1463 |
 
-1. **Custom CNN (MeteorNet):** a convolutional neural network trained from scratch. The final comparison uses the Group Normalization (GroupNorm) experiment.
-2. **ResNet18:** an ImageNet-pretrained ResNet18 adapted for two-class classification.
-3. **MobileNetV2:** an ImageNet-pretrained MobileNetV2 adapted for two-class classification.
+Meteor is the positive class. All results are from the project's recorded experiments on the balanced 3,000-image test split. ResNet34 has the highest accuracy (99.30%); DenseNet121 has the highest ROC-AUC (0.999640); ResNet18 has the fewest false positives (8). Real-time latency and independent-source generalization are not established.
 
-## Test-set results
-
-Detailed per-model metrics, confusion matrices, experiment limitations and literature survey notes are available in [RESULTS_AND_LITERATURE.md](RESULTS_AND_LITERATURE.md).
-
-All three models were evaluated on the same held-out test set of **3,000 images**, containing 1,500 images per class.
-
-| Model | Test accuracy | Test ROC-AUC | Correct predictions |
-|---|---:|---:|---:|
-| ResNet18 | **99.00%** | **99.93%** | 2,970 / 3,000 |
-| MobileNetV2 | 98.57% | 99.89% | 2,957 / 3,000 |
-| Custom CNN (GroupNorm) | 97.80% | 99.75% | 2,934 / 3,000 |
-
-ResNet18 achieved the highest test accuracy in this experiment. ROC-AUC measures ranking/discrimination performance and should not be interpreted as accuracy.
-
-### Custom CNN (GroupNorm): test metrics
-
-| Metric | Score |
-|---|---:|
-| Accuracy | 97.80% |
-| Balanced accuracy | 97.80% |
-| Meteor precision | 97.55% |
-| Meteor recall | 98.07% |
-| Meteor F1-score | 97.81% |
-| Macro F1-score | 97.80% |
-| ROC-AUC | 99.75% |
-
-**Custom CNN confusion matrix** (rows = actual class; columns = predicted class; order = Meteor, Non-Meteor):
-
-| | Predicted Meteor | Predicted Non-Meteor |
-|---|---:|---:|
-| Actual Meteor | 1,471 | 29 |
-| Actual Non-Meteor | 37 | 1,463 |
-
-These results describe performance on the supplied dataset and its held-out split. They are not a guarantee of performance on independently collected sky imagery.
+**Artifact status:** The repository's existing training code, poster, report and original graphs are legacy three-model artifacts, not the complete historical ten-model training implementation. Original additional experiment artifacts are retained in the [team Drive backup](https://drive.google.com/drive/folders/1rWP1N80QkSxXAnLvTKqBgLkWr_aENLkW). Access permissions may be required. No checkpoints were added or training rerun in this documentation update.
 
 ## System architecture
 
-The diagram below shows the end-to-end workflow used in MeteorNet, from the supplied image dataset through model training, held-out evaluation and image-level prediction.
+Dataset → group-aware split → preprocessing and training-only augmentation → ten separate model experiments → validation-based checkpoint selection → held-out test evaluation → comparison of metrics.
 
-```mermaid
-flowchart TD
-    A["Supplied image dataset<br/>20,000 JPG images"] --> B["Class folders<br/>Meteor (0) / Non-Meteor (1)"]
-    B --> C["Dataset inspection and audit"]
-    C --> D["Preprocessing<br/>Resize to 224 × 224<br/>ImageNet normalization"]
-    D --> E["Group-aware split<br/>70% train / 15% validation / 15% test"]
-    E --> F["Training data<br/>Training-only augmentation<br/>Rotation ≤ 15°; horizontal flip p = 0.5"]
-    F --> G1["Custom CNN<br/>(GroupNorm)"]
-    F --> G2["ResNet18<br/>(ImageNet pretrained)"]
-    F --> G3["MobileNetV2<br/>(ImageNet pretrained)"]
-    E --> H["Held-out test set<br/>3,000 images"]
-    G1 --> I["Validation-based model selection"]
-    G2 --> I
-    G3 --> I
-    I --> J["Evaluate each model<br/>on the same test set"]
-    H --> J
-    J --> K["Compare accuracy, precision,<br/>recall, F1-score and ROC-AUC"]
-    K --> L["Best test accuracy in this experiment:<br/>ResNet18 — 99.00%"]
-    M["New input image"] --> N["Apply inference preprocessing"]
-    N --> O["Load configured trained checkpoint"]
-    O --> P["Image-level prediction"]
-    P --> Q["Meteor or Non-Meteor"]
-```
-
-**Architecture notes**
-- The three model branches are trained as separate experiments and compared using the same held-out test set.
-- Augmentation is applied to training data only; validation and test images are not randomly augmented.
-- The prediction path represents single-image classification. It does not draw bounding boxes or establish continuous live-video detection.
-- ResNet18 achieved the highest test accuracy among the three evaluated models; the prediction script uses whichever model/checkpoint is configured for that run.
+Inference uses the configured model and checkpoint for single-image classification. Continuous live-video detection is not verified.
 
 ## Methodology
 
@@ -114,7 +62,7 @@ flowchart TD
 3. Normalize using ImageNet mean and standard deviation.
 4. Apply training augmentation, including rotation (up to 15°) and horizontal flipping.
 5. Create a group-based split using filename prefixes, with a **70:15:15** train/validation/test ratio and random seed **42**.
-6. Train the Custom CNN, ResNet18 and MobileNetV2.
+6. Train the ten architectures listed in the final evaluation.
 7. Evaluate each model on the same held-out test set using accuracy, precision, recall, F1-score and ROC-AUC.
 8. Compare model performance and inspect the confusion matrices and ROC curves.
 
