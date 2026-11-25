@@ -28,7 +28,7 @@
 
 Meteor is the positive class. All results are from the project's recorded experiments on the balanced 3,000-image test split. ResNet34 has the highest accuracy (99.30%); DenseNet121 has the highest ROC-AUC (0.999640); ResNet18 has the fewest false positives (8). Real-time latency and independent-source generalization are not established.
 
-**Artifact status:** The repository's existing training code, poster, report and original graphs are legacy three-model artifacts, not the complete historical ten-model training implementation. Original additional experiment artifacts are retained in the [team Drive backup](https://drive.google.com/drive/folders/1rWP1N80QkSxXAnLvTKqBgLkWr_aENLkW). Access permissions may be required. No checkpoints were added or training rerun in this documentation update.
+**Artifact status:** The repository's existing training code, poster, report and original graphs are legacy three-model artifacts, not the complete historical ten-model training implementation. Original additional experiment artifacts are retained in the [experiment Drive backup](https://drive.google.com/drive/folders/1rWP1N80QkSxXAnLvTKqBgLkWr_aENLkW). Access permissions may be required. No checkpoints were added or training rerun in this documentation update.
 
 
 ## 3. Legacy detailed metrics for the initial three models
@@ -103,7 +103,7 @@ ResNet34 leads test accuracy; DenseNet121 leads ROC-AUC. ResNet18 has the fewest
 
 ## 5. Limitations and threats to validity
 
-- The original archive, `D_2 DATASET (METEORS).zip`, was supplied to the team by the faculty guide through senior students for academic use. Its original public source and redistribution licence have not been independently verified.
+- The original archive, `D_2 DATASET (METEORS).zip`, was supplied for the project by the faculty guide through senior students for academic use. Its original public source and redistribution licence have not been independently verified.
 - Filename-year distributions differ between classes in the supplied dataset. The meteor images include filenames from 2019, 2020 and 2021, while the non-meteor images were reported from 2021. This may allow source-related shortcuts; it does not prove that a model used such a shortcut.
 - Grouping by filename prefix reduces some related-image overlap across splits, but does not guarantee independence by observatory, camera, recording session or acquisition source.
 - Exact duplicate scanning found no byte-identical images. Near-duplicate images have not been ruled out.
@@ -138,6 +138,6 @@ MobileNetV2 uses inverted residual blocks and depthwise convolutions to reduce c
 
 ## 7. Reproducibility artifacts
 
-The team retained experiment artifacts in its Google Drive backup, including model checkpoints, training histories, test metric JSON files, graph images, configuration files and split manifests. The checkpoint files and full dataset are not included in this repository at this stage.
+The experiment artifacts are retained in the Google Drive backup, including model checkpoints, training histories, test metric JSON files, graph images, configuration files and split manifests. The checkpoint files and full dataset are not included in this repository at this stage.
 
 For a reproducible rerun, use the same dataset version, code revision, split manifest, seed, preprocessing configuration and model checkpoint selection. Record the installed package versions and hardware/software environment alongside any new run.
