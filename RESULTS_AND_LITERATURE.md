@@ -9,24 +9,29 @@
 - Training augmentation: rotation up to 15° and horizontal flip (probability 0.5).
 - Split: group-aware filename-prefix split, seed 42; 70% train, 15% validation, 15% test.
 - Split counts: 14,000 train, 3,000 validation, 3,000 test.
-- Test set: identical for all three models, balanced with 1,500 examples per class.
+- Test set: shared across the ten recorded experiments, balanced with 1,500 examples per class.
 
-## 2. Test-set model comparison
+## Final ten-model evaluation
 
-| Model | Test accuracy | Balanced accuracy | Macro precision | Macro recall | Macro F1 | ROC-AUC |
-|---|---:|---:|---:|---:|---:|---:|
-| ResNet18 (pretrained) | **99.00%** | 99.00% | 99.00% | 99.00% | 99.00% | **99.9261%** |
-| MobileNetV2 (pretrained) | 98.5667% | 98.5667% | 98.5669% | 98.5667% | 98.5667% | 99.8946% |
-| Custom CNN (GroupNorm) | 97.80% | 97.80% | 97.8014% | 97.80% | 97.80% | 99.7540% |
+| Model | Accuracy | ROC-AUC | Correct | TP | FN | FP | TN |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| ResNet34 | 99.3000% | 0.999384 | 2979/3000 | 1495 | 5 | 16 | 1484 |
+| DenseNet121 | 99.1333% | 0.999640 | 2974/3000 | 1491 | 9 | 17 | 1483 |
+| VGG16 | 99.0333% | 0.999323 | 2971/3000 | 1485 | 15 | 14 | 1486 |
+| ResNet18 | 99.0000% | 0.999261 | 2970/3000 | 1478 | 22 | 8 | 1492 |
+| InceptionV3 | 98.7000% | 0.999426 | 2961/3000 | 1479 | 21 | 18 | 1482 |
+| AlexNet | 98.6333% | 0.998572 | 2959/3000 | 1473 | 27 | 14 | 1486 |
+| EfficientNet-B0 | 98.6000% | 0.998811 | 2958/3000 | 1483 | 17 | 25 | 1475 |
+| MobileNetV2 | 98.5667% | 0.998946 | 2957/3000 | 1480 | 20 | 23 | 1477 |
+| ShuffleNetV2 x1.0 | 98.5667% | 0.999351 | 2957/3000 | 1488 | 12 | 31 | 1469 |
+| Custom CNN (GroupNorm) | 97.8000% | 0.997540 | 2934/3000 | 1471 | 29 | 37 | 1463 |
 
-Accuracy as correct predictions:
-- ResNet18: 2,970 / 3,000 (30 incorrect).
-- MobileNetV2: approximately 2,957 / 3,000 (43 incorrect; based on reported rounded accuracy).
-- Custom CNN (GroupNorm): 2,934 / 3,000 (66 incorrect).
+Meteor is the positive class. All results are from the project's recorded experiments on the balanced 3,000-image test split. ResNet34 has the highest accuracy (99.30%); DenseNet121 has the highest ROC-AUC (0.999640); ResNet18 has the fewest false positives (8). Real-time latency and independent-source generalization are not established.
 
-ROC-AUC is a threshold-independent ranking metric; it is not the same as accuracy.
+**Artifact status:** The repository's existing training code, poster, report and original graphs are legacy three-model artifacts, not the complete historical ten-model training implementation. Original additional experiment artifacts are retained in the [team Drive backup](https://drive.google.com/drive/folders/1rWP1N80QkSxXAnLvTKqBgLkWr_aENLkW). Access permissions may be required. No checkpoints were added or training rerun in this documentation update.
 
-## 3. Per-model details
+
+## 3. Legacy detailed metrics for the initial three models
 
 ### 3.1 ResNet18
 
@@ -94,9 +99,7 @@ Training stopped early; best validation checkpoint was from epoch 12.
 
 ## 4. Interpretation
 
-ResNet18 achieved the strongest result on this held-out test split, followed by MobileNetV2 and the custom GroupNorm CNN. MobileNetV2 offers a lightweight architecture and may be worth considering when deployment constraints matter, but inference latency and model size must be measured on the intended hardware before making a deployment claim.
-
-The three models were evaluated against the same balanced test set. The results are therefore directly comparable within this experiment, but they do not establish generalization to every observatory, camera, sky condition, or image source.
+ResNet34 leads test accuracy; DenseNet121 leads ROC-AUC. ResNet18 has the fewest false positives. Throughput and model size need separate measurement. These results do not establish external generalization.
 
 ## 5. Limitations and threats to validity
 
@@ -119,7 +122,7 @@ The paper applies CNN filtering to optical meteor-observatory data to automate p
 
 V. Y. Shirasuna and A. L. S. Gradvohl, “An optimized training approach for meteor detection with an attention mechanism to improve robustness on limited data,” *Astronomy and Computing*, vol. 45, article 100753, October 2023. DOI: [10.1016/j.ascom.2023.100753](https://doi.org/10.1016/j.ascom.2023.100753).
 
-This study investigates training strategies and attention mechanisms for meteor detection when labelled data are limited, with an emphasis on robustness and generalization. It motivates careful training design and the need to evaluate beyond a single convenient split. MeteorNet's current experiments compare a custom CNN and two pretrained classification backbones; they do not implement the attention mechanism proposed in that paper.
+This study investigates training strategies and attention mechanisms for meteor detection when labelled data are limited, with an emphasis on robustness and generalization. It motivates careful training design and the need to evaluate beyond a single convenient split. MeteorNet's experiments compare ten classification architectures; they do not implement the attention mechanism proposed in that paper.
 
 ### [3] He et al. (2016)
 
