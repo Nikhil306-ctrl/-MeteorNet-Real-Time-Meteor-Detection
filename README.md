@@ -179,17 +179,6 @@ python predict.py --help
 
 Use the options exposed by the scripts and the configuration files in this repository. The exact training runs and split manifest used for the reported results should be retained with the experiment artifacts.
 
-## Project team
-
-**Institution:** KLE Technological University, Belagavi  
-**Project guide:** Dr. Salma Shahapur
-
-**Team members**
-- Nikhil Vijapur — 02FE24BCS043
-- Ritvik Shinde — 02FE24BCS083
-- Vidya Hugar — 02FE24BCS153
-- Ritika Navalyal — 02FE24BCS151
-
 ## Repository
 
 [GitHub — MeteorNet: Real-Time Meteor Detection](https://github.com/Nikhil306-ctrl/-MeteorNet-Real-Time-Meteor-Detection)
